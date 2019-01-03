@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import argparse
-import glob
-import re
-import sys
 import os
+import re
 import shutil
 from subprocess import call
+
+from helpers import compile_helper
 
 
 def to_lower_case(string):
@@ -97,7 +97,10 @@ def write_proto(path, name, proto):
 
         if args.language == 'objc':
             options = True
-            file.write('option objc_class_prefix = "GPB";\n')
+            # Original prefix
+            # file.write('option objc_class_prefix = "GPB";\n')
+            # Edited prefix by elliotrobot commit: https://github.com/Furtif/POGOProtos/commit/a0fae2886d32f19c5b93352cf29f65037ef90f6d
+            file.write('option objc_class_prefix = "";\n')
 
         if args.language == 'go':
             options = True
@@ -224,7 +227,7 @@ def format_protos(
                 if import_path.startswith('POGOProtos/'):
                     if import_path_split[1:-1]:
                         import_path_path = path + '/' + \
-                            '/'.join(import_path_split[1:-1])
+                                           '/'.join(import_path_split[1:-1])
                     else:
                         import_path_path = path
                 if path_lower:
@@ -248,6 +251,7 @@ def format_protos(
                 if package_lower:
                     found_package = found_package.lower()
                 return found_package + type
+
             for line in content:
                 new_content.append(
                     re.sub(
@@ -258,6 +262,7 @@ def format_protos(
                 new_package, new_imports, new_content)
         new_protos[new_proto_path] = new_proto_folder
     return new_protos
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -396,7 +401,7 @@ if args.language == 'go':
                         '/map/',
                         r'/maps/',
                         import_path),
-                        import_is_public))
+                     import_is_public))
             new_content = []
             for line in content:
                 new_content.append(re.sub('\.map\.', r'.maps.', line))
@@ -456,17 +461,11 @@ for proto_files in proto_folders:
                 '"' + proto_file + '"'))
 
 for command in commands:
-    call(command, shell=(os.name != 'nt'))
+    call(command, shell=True)
 
 if args.language == 'python':
-    for path in protos:
-        open(
-            os.path.join(
-                os.path.join(
-                    out_path,
-                    *path.split('/')),
-                '__init__.py'),
-            'w').close()
+    compile_helper.finish_compile(out_path, args.language)
+
 elif args.language == 'ruby':
     for path in protos:
         with open(os.path.join(out_path, *path.split('/')) + '.rb', 'w') as file:

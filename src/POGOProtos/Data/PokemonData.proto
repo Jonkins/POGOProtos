@@ -5,6 +5,7 @@ import "POGOProtos/Data/PokemonDisplay.proto";
 import "POGOProtos/Enums/PokemonId.proto";
 import "POGOProtos/Enums/PokemonMove.proto";
 import "POGOProtos/Inventory/Item/ItemId.proto";
+import "POGOProtos/Data/Combat/PokemonCombatStats.proto";
 
 message PokemonData {
 	fixed64 id = 1;
@@ -44,4 +45,15 @@ message PokemonData {
 	.POGOProtos.Data.PokemonDisplay pokemon_display = 36;
 	bool is_bad = 37;
 	bool hatched_from_egg = 38;
+	int32 coins_returned = 39;
+	int64 deployed_duration_ms = 40;
+	int64 deployed_returned_timestamp_ms = 41;
+	float cp_multiplier_before_trading = 42;
+	int32 trading_original_owner_hash = 43;
+	string original_owner_nickname = 44;
+	int64 traded_time_ms = 45;
+	bool is_lucky = 46;
+	.POGOProtos.Enums.PokemonMove move_3 = 47;
+	.POGOProtos.Data.Combat.PokemonCombatStats pvp_combat_stats = 48;
+	.POGOProtos.Data.Combat.PokemonCombatStats npc_combat_stats = 49;
 }

@@ -4,7 +4,6 @@ package POGOProtos.Settings.Master;
 import "POGOProtos/Enums/ItemCategory.proto";
 import "POGOProtos/Inventory/Item/ItemId.proto";
 import "POGOProtos/Inventory/Item/ItemType.proto";
-
 import "POGOProtos/Settings/Master/Item/FoodAttributes.proto";
 import "POGOProtos/Settings/Master/Item/PotionAttributes.proto";
 import "POGOProtos/Settings/Master/Item/ReviveAttributes.proto";
@@ -15,6 +14,7 @@ import "POGOProtos/Settings/Master/Item/FortModifierAttributes.proto";
 import "POGOProtos/Settings/Master/Item/EggIncubatorAttributes.proto";
 import "POGOProtos/Settings/Master/Item/ExperienceBoostAttributes.proto";
 import "POGOProtos/Settings/Master/Item/InventoryUpgradeAttributes.proto";
+import "POGOProtos/Settings/Master/Item/StardustBoostAttributes.proto";
 
 message ItemSettings {
 	.POGOProtos.Inventory.Item.ItemId item_id = 1;
@@ -35,4 +35,5 @@ message ItemSettings {
 	.POGOProtos.Settings.Master.Item.IncenseAttributes incense = 13;
 	.POGOProtos.Settings.Master.Item.EggIncubatorAttributes egg_incubator = 14;
 	.POGOProtos.Settings.Master.Item.FortModifierAttributes fort_modifier = 15;
+	.POGOProtos.Settings.Master.Item.StardustBoostAttributes stardust_boost = 16;
 }
